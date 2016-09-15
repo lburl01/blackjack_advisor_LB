@@ -11,6 +11,8 @@ def convert_to_f(card, card_total)
     card_total << card
   elsif card == "K"
     card_total << card
+  elsif card == "A"
+    card_total << card
   end
 end
 
