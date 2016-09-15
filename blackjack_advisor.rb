@@ -1,16 +1,11 @@
 all_cards = []
 dealer_card_arr = []
+user_and_dealer_cards = {}
 
 def convert_to_f(card, all_cards)
   if card.to_f != 0
     all_cards << card.to_f
-  elsif card == "J"
-    all_cards << card
-  elsif card == "Q"
-    all_cards << card
-  elsif card == "K"
-    all_cards << card
-  elsif card == "A"
+  elsif card == "J" || card == "Q" || card == "K" || card == "A"
     all_cards << card
   end
 end
@@ -26,12 +21,13 @@ def add_two_cards(all_cards, sum)
   sum = all_cards.first + all_cards.last
 end
 
-# hand has no ace
-def is_hard?
+# soft hand = has at least one ace
+def is_soft?(all_cards)
+  if all_cards.include?(11.0)
 end
 
-# hand has at least one ace
-def is_soft?
+def is_pair?(all_cards)
+  puts "pair" if all_cards.first == all_cards.last
 end
 
 puts "Time to enter your first card, Tex. (Ace = A, Jack, Queen, King = J, Q, K respectively)"
@@ -50,8 +46,6 @@ card_two = gets.chomp.upcase
 convert_to_f(card_two, all_cards)
 convert_faces_to_num(all_cards)
 
-puts "#{all_cards}"
-
 sum = all_cards.first + all_cards.last
 
 puts "Sum of user's cards: #{sum}"
@@ -64,8 +58,10 @@ dealer_card = gets.chomp.upcase
 convert_to_f(dealer_card, dealer_card_arr)
 convert_faces_to_num(dealer_card_arr)
 
-puts "#{dealer_card_arr}"
+user_and_dealer_cards[sum] = dealer_card_arr
 
+# if is_soft?(all_cards)
+# end
 
 
 # puts "Your optimal move is to #{optimal_move}."
