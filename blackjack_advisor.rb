@@ -17,6 +17,11 @@ def convert_faces_to_num(all_cards)
   all_cards.map! { |x| x != "A" ? x : 11.0}
 end
 
+def run_all_fxns(cards, arrays)
+convert_to_f(cards, arrays)
+convert_faces_to_num(arrays)
+end
+
 def add_two_cards(all_cards, sum)
   sum = all_cards.first + all_cards.last
 end
@@ -43,8 +48,7 @@ print "> "
 
 card_two = gets.chomp.upcase
 
-convert_to_f(card_two, all_cards)
-convert_faces_to_num(all_cards)
+run_all_fxns(card_two, all_cards)
 
 sum = all_cards.first + all_cards.last
 
@@ -55,15 +59,20 @@ print "> "
 
 dealer_card = gets.chomp.upcase
 
-convert_to_f(dealer_card, dealer_card_arr)
-convert_faces_to_num(dealer_card_arr)
+run_all_fxns(dealer_card, dealer_card_arr)
 
 user_and_dealer_cards[sum] = dealer_card_arr
+
+puts "#{user_and_dealer_cards}"
 
 if is_pair?(all_cards)
   puts "pair stuff goes here."
 elsif is_soft?(all_cards) == false
-  puts "not soft"
+    if user_and_dealer_cards.key?(5.0) || user_and_dealer_cards.key?(6.0) || user_and_dealer_cards.key?(7.0)
+      puts "HIT!"
+    elsif user_and_dealer_cards.key?(13.0) && user_and_dealer_cards.has_value?([7.0])
+      puts "HIT2!"
+    end
 else is_soft?(all_cards)
   puts "soft"
 end
