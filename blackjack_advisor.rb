@@ -1,27 +1,29 @@
-card_total = []
-dealer_card = []
+all_cards = []
+dealer_card_arr = []
 
- #|| card != "K" || card != "Q"
-def convert_to_f(card, card_total)
+def convert_to_f(card, all_cards)
   if card.to_f != 0
-    card_total << card.to_f
+    all_cards << card.to_f
   elsif card == "J"
-    card_total << card
+    all_cards << card
   elsif card == "Q"
-    card_total << card
+    all_cards << card
   elsif card == "K"
-    card_total << card
+    all_cards << card
   elsif card == "A"
-    card_total << card
+    all_cards << card
   end
 end
 
-# convert JQK to numeral 10, A to numeral 11
-def convert_faces_to_num(card_total)
-  card_total.map! { |x| x != "J" ? x : 10.0}
-  card_total.map! { |x| x != "Q" ? x : 10.0}
-  card_total.map! { |x| x != "K" ? x : 10.0}
-  card_total.map! { |x| x != "A" ? x : 11.0}
+def convert_faces_to_num(all_cards)
+  all_cards.map! { |x| x != "J" ? x : 10.0}
+  all_cards.map! { |x| x != "Q" ? x : 10.0}
+  all_cards.map! { |x| x != "K" ? x : 10.0}
+  all_cards.map! { |x| x != "A" ? x : 11.0}
+end
+
+def add_two_cards(all_cards, sum)
+  sum = all_cards.first + all_cards.last
 end
 
 # hand has no ace
@@ -37,23 +39,33 @@ print "> "
 
 card_one = gets.chomp.upcase
 
-convert_to_f(card_one, card_total)
-convert_faces_to_num(card_total)
+convert_to_f(card_one, all_cards)
+convert_faces_to_num(all_cards)
 
 puts "Enter your second card: "
 print "> "
 
 card_two = gets.chomp.upcase
 
-convert_to_f(card_two, card_total)
-convert_faces_to_num(card_total)
+convert_to_f(card_two, all_cards)
+convert_faces_to_num(all_cards)
 
-print "#{card_total}"
+puts "#{all_cards}"
 
+sum = all_cards.first + all_cards.last
+
+puts "Sum of user's cards: #{sum}"
 
 puts "Enter the dealer's first card: "
 print "> "
 
-dealer_card = gets.chomp
+dealer_card = gets.chomp.upcase
+
+convert_to_f(dealer_card, dealer_card_arr)
+convert_faces_to_num(dealer_card_arr)
+
+puts "#{dealer_card_arr}"
+
+
 
 # puts "Your optimal move is to #{optimal_move}."
