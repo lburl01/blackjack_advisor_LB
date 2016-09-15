@@ -23,11 +23,11 @@ end
 
 # soft hand = has at least one ace
 def is_soft?(all_cards)
-  if all_cards.include?(11.0)
+  all_cards.include?(11.0)
 end
 
 def is_pair?(all_cards)
-  puts "pair" if all_cards.first == all_cards.last
+  all_cards.first == all_cards.last
 end
 
 puts "Time to enter your first card, Tex. (Ace = A, Jack, Queen, King = J, Q, K respectively)"
@@ -60,8 +60,12 @@ convert_faces_to_num(dealer_card_arr)
 
 user_and_dealer_cards[sum] = dealer_card_arr
 
-# if is_soft?(all_cards)
-# end
-
+if is_pair?(all_cards)
+  puts "pair stuff goes here."
+elsif is_soft?(all_cards) == false
+  puts "not soft"
+else is_soft?(all_cards)
+  puts "soft"
+end
 
 # puts "Your optimal move is to #{optimal_move}."
