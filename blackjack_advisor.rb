@@ -15,7 +15,6 @@ card_value_conversion = {
   "4" => 4,
   "3" => 3,
   "2" => 2,
-  "1" => 1
 }
 
 # if hard:
@@ -33,7 +32,7 @@ optimal_moves = {
     8 => [*5..6],
     9 => [*7..11],
     10 => [*10..11],
-    11 => [*2..11],
+    11 => [*2..11]
   },
   "Stand." => {
     12 => [*4..6],
@@ -50,7 +49,9 @@ optimal_moves = {
 }
 
 def get_optimal_move(sum, dealer_card, optimal_moves)
-  optimal_moves.each do |optimal_move, user_vs_dealer|
+  # I want the order to check stand, hit, then double-hit in that order. So i'm going to call the keys stand, hit, double-hit and then move through my regular function I had previously. The only thing I have to add is assigning the user_vs_dealer to the appropriate value.
+  ['Stand.', 'HIT!', 'Double-hit!'].each do |optimal_move|
+    user_vs_dealer = optimal_moves[optimal_move]
     if user_vs_dealer.has_key?(sum)
       dealer_cards = user_vs_dealer[sum]
       if dealer_cards.include?(dealer_card)
@@ -63,11 +64,11 @@ end
 def get_card_make_number(card_value_conversion)
   card = gets.chomp.upcase
   card_value = card_value_conversion[card]
-    while card_value == nil
-      puts "That doesn't look like a card. Won't you try 1-10 or a face card?"
-      print "> "
-      card_value = get_card_make_number(card_value_conversion)
-    end
+  while card_value == nil
+    puts "That doesn't look like a card. Won't you try 1-10 or a face card?"
+    print "> "
+    card_value = get_card_make_number(card_value_conversion)
+  end
   return card_value
 end
 
