@@ -62,15 +62,27 @@ puts "Time to enter your first card, Tex. (Ace = A, Jack, Queen, King = J, Q, K 
 print "> "
 
 card_one = gets.chomp.upcase
-
 card_value_one = card_value_conversion[card_one]
+
+while card_value_one == nil
+  puts "That doesn't look like a card. Won't you try 1-10 or a face card?"
+  print "> "
+  card_one = gets.chomp.upcase
+  card_value_one = card_value_conversion[card_one]
+end
 
 puts "Enter your second card."
 print "> "
 
 card_two = gets.chomp.upcase
-
 card_value_two = card_value_conversion[card_two]
+
+while card_value_one == nil
+  puts "That doesn't look like a card. Won't you try 1-10 or a face card?"
+  print "> "
+  card_two = gets.chomp.upcase
+  card_value_two = card_value_conversion[card_two]
+end
 
 full_hand_sum = card_value_one + card_value_two
 
@@ -78,8 +90,14 @@ puts "Now enter the dealer's first card."
 print "> "
 
 dealer_card = gets.chomp.upcase
-
 card_value_dealer = card_value_conversion[dealer_card]
+
+while card_value_one == nil
+  puts "That doesn't look like a card. Won't you try 1-10 or a face card?"
+  print "> "
+  dealer_card = gets.chomp.upcase
+  card_value_dealer = card_value_conversion[dealer_card]
+end
 
 hand_vs_dealer[full_hand_sum] = card_value_dealer
 
