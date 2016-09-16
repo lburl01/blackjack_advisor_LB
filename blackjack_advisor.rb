@@ -1,5 +1,4 @@
-all_cards = []
-dealer_card_arr = []
+
 hand_vs_dealer = {}
 
 card_value_conversion = {
@@ -19,7 +18,8 @@ card_value_conversion = {
   "1" => 1
 }
 
-optimal_move_if_hard = {
+# if hard:
+optimal_moves = {
   "HIT!" => {
     5 => [*2..11],
     6 => [*2..11],
@@ -49,64 +49,52 @@ optimal_move_if_hard = {
   }
 }
 
-# soft hand = has at least one ace
-def is_soft?(all_cards)
-  all_cards.include?(11.0)
+def get_optimal_move(sum, dealer_card, optimal_moves)
+  optimal_moves.each do |optimal_move, user_vs_dealer|
+    if user_vs_dealer.has_key?(sum)
+      dealer_cards = user_vs_dealer[sum]
+      if dealer_cards.include?(dealer_card)
+        return optimal_move
+      end
+    end
+  end
 end
 
-def is_pair?(all_cards)
-  all_cards.first == all_cards.last
+def get_card_make_number(card_value_conversion)
+  card = gets.chomp.upcase
+  card_value = card_value_conversion[card]
+    while card_value == nil
+      puts "That doesn't look like a card. Won't you try 1-10 or a face card?"
+      print "> "
+      card_value = get_card_make_number(card_value_conversion)
+    end
+  return card_value
 end
 
 puts "Time to enter your first card, Tex. (Ace = A, Jack, Queen, King = J, Q, K respectively.)"
 print "> "
 
-card_one = gets.chomp.upcase
-card_value_one = card_value_conversion[card_one]
-
-while card_value_one == nil
-  puts "That doesn't look like a card. Won't you try 1-10 or a face card?"
-  print "> "
-  card_one = gets.chomp.upcase
-  card_value_one = card_value_conversion[card_one]
-end
+card_value_one = get_card_make_number(card_value_conversion)
 
 puts "Enter your second card."
 print "> "
 
-card_two = gets.chomp.upcase
-card_value_two = card_value_conversion[card_two]
-
-while card_value_one == nil
-  puts "That doesn't look like a card. Won't you try 1-10 or a face card?"
-  print "> "
-  card_two = gets.chomp.upcase
-  card_value_two = card_value_conversion[card_two]
-end
-
+card_value_two = get_card_make_number(card_value_conversion)
 full_hand_sum = card_value_one + card_value_two
 
 puts "Now enter the dealer's first card."
 print "> "
 
-dealer_card = gets.chomp.upcase
-card_value_dealer = card_value_conversion[dealer_card]
-
-while card_value_one == nil
-  puts "That doesn't look like a card. Won't you try 1-10 or a face card?"
-  print "> "
-  dealer_card = gets.chomp.upcase
-  card_value_dealer = card_value_conversion[dealer_card]
-end
-
+card_value_dealer = get_card_make_number(card_value_conversion)
 hand_vs_dealer[full_hand_sum] = card_value_dealer
 
-puts "#{hand_vs_dealer}"
-
-# if is_pair?(all_cards)
-#   puts "pair stuff goes here."
-# elsif is_soft?(all_cards) == false
-#     puts "hard"
-# else is_soft?(all_cards)
-#   puts "soft"
-# end
+if card_value_one == card_value_two
+  puts "pair stuff goes here."
+  # ran out of time to upload all these hash values.
+elsif card_value_one != 11 && card_value_two != 11
+  optimal_move = get_optimal_move(full_hand_sum, card_value_dealer, optimal_moves)
+  puts "Looks like you should #{optimal_move}."
+else
+  puts "soft"
+  # ran out of time to upload these hash values!
+end
